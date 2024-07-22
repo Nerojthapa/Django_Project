@@ -1,0 +1,66 @@
+
+{% extends "admins/index.html" %}
+{% load static %}
+
+{% block title%}
+<title>category</title>
+{% endblock %}
+
+
+{% block main_content%}
+<div class="relative overflow-x-auto mt-4">
+  {% for msg in messages %}
+  {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+  <div class="flex justify-center">
+    <span class="bg-green-300 text-xl font-bold p-3 rounded-lg text-blue-500">
+      {{msg}}
+    </span>
+  </div>
+  {% endif %}
+  {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERRORS%}
+  <div class="flex justify-center">
+    <span class="bg-red-300 text-xl font-bold p-3 rounded-lg text-blue-500">
+      {{msg}}
+    </span>
+  </div>
+  {% endif %}
+  {% endfor %}
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-white uppercase bg-primary_color dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Category name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in category %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   {{c.category_name}}
+                </th>
+                
+                <td class="px-6 py-4">
+                    <a href="{%url 'updatecategory' c.id%}">
+                        <i class="fa-solid fa-pen-to-square text-blue-600 text-lg"></i>
+                    </a>
+                    &nbsp; &nbsp;
+                    <a href="{%url 'deletecategory' c.id%}" onclick="return alert('Are you sure you want to delete this?')">
+                        <i class="fa-solid fa-trash text-red-600 text-lg"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% for p in product %}
+<h1>{{p.product_name}}</h1>
+<img src="/{{p.image}}" alt="{{p.product_name}}" width="200px">
+
+{% endfor %}
+<img src="{% static 'img/niroj.jpg'%}" alt="myphoto" width="200px">
+{%endblock %}
