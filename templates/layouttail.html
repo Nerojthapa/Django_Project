@@ -51,6 +51,11 @@
           <a href="{% url 'register' %}" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Sign up</a>
           <a href="{% url 'login' %}" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login</a>
           {% endif %}
+
+          <a href="% url 'userprofile' %" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="{% static 'img/user.jpeg'%}" class="h-8 w-8 rounded-full" alt="Flowbite Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap hover:text-black hover:underline">My profile</span>
+        </a>
       </div>
   </div>
 </nav>

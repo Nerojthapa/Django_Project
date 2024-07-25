@@ -227,3 +227,24 @@ class EsewaView(View):
             'cart':cart
         }
         return render(request,'users/esewa_payment.html',context)
+import json
+@login_required
+def esewa_verify(request, order_id, cart_id):
+    if request.method =='GET':
+        data = request.GET.get('data')
+        decoded_data = base64.b64decode(data).decode('utf-8')
+        map_data = json.loads(decoded_data)
+        order= Order.objects.get(id=order_id)
+        cart = Cart.objects.get(id=cart_id)
+           
+
+        if map_data.get('status')=='COMPLETE':
+            order.payment_status = True
+            order.save()
+            cart.delete()
+            messages.add_message(request, messages.SUCCESS, 'Payment successful') 
+            return redirect('/myorder')
+        else:
+            messages.add_message(request,messages.ERROR, 'Failed to make payment')  
+            return redirect('/myorder')
+
