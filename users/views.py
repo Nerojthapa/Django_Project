@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.views import View
 from users.auth import admin_only
 import decimal
+from django.core.paginator import Paginator
 # Create your views here.
 def homepage(request):
     user = request.user.id
@@ -25,11 +26,17 @@ def homepage(request):
 def productpage(request):
     user = request.user.id
     product = Product.objects.all().order_by('-id')
+    paginator=Paginator(product,2)
+    page_number= request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+    totalpage=page_obj.paginator.num_pages
     item = Cart.objects.filter(User=user)
     product_filter = ProductFilter(request.GET, queryset=product)
     product_final = product_filter.qs
     context = {
-        'product':product_final,
+        'product':page_obj,
+        'lastpage':totalpage,
+        'tl':[n+1 for n in range(totalpage)],
         'product_filter':product_filter,
         'items':item
     }
@@ -248,3 +255,37 @@ def esewa_verify(request, order_id, cart_id):
             messages.add_message(request,messages.ERROR, 'Failed to make payment')  
             return redirect('/myorder')
 
+
+@login_required
+def userprofile(request):
+    user = request.user
+    data = User.objects.all()
+    context = {
+        'users': data,
+    }
+    return render(request, 'users/userprofile.html', context)
+
+@login_required
+def userprofile(request):
+    user = User.objects.get(username = request.user)
+    context = {
+        'users': user
+    }
+    return render(request, 'users/userprofile.html', context)
+
+@login_required
+def updateprofile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'User profile updated sucessfully')
+            return redirect('/userprofile')
+
+        else:
+            messages.add_message(request, messages.ERROR, 'Kindly provide correct credentials')
+            return render(request, 'users/userprofile' , {'form': forms })
+    context = {
+        'form': ProfileUpdateForm(instance=request.user)
+    }
+    return render(request, 'users/updateprofile.html',context)

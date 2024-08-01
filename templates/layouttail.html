@@ -46,16 +46,30 @@
           </span>
           </svg>
           </a>
-          <a href="{% url 'logout' %}" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"">Logout</a>
-          {% else %}
-          <a href="{% url 'register' %}" class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Sign up</a>
-          <a href="{% url 'login' %}" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Login</a>
-          {% endif %}
+          <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="{%static 'img/niroj3.jpg'%}" alt="User dropdown">
 
-          <a href="% url 'userprofile' %" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="{% static 'img/user.jpeg'%}" class="h-8 w-8 rounded-full" alt="Flowbite Logo" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap hover:text-black hover:underline">My profile</span>
-        </a>
+<!-- Dropdown menu -->
+<div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"  style="z-index: 100;">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>{{user.username}}</div>
+      <div class="font-medium truncate">name@flowbite.com</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+      <li>
+        <a href="{%url 'userprofile'%}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+      </li>
+     
+    </ul>
+    <div class="py-1">
+      <a href="{%url 'login'%}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+    </div>
+</div>
+
+                  {% else %}
+                  <a href="{%url 'login'%}" class="py-2 px-3 bg-green-400 text-white rounded hover:bg-red-500 transition duration-300">Login</a>
+                  <a href="{%url 'register'%}" class="py-2 px-3 bg-blue-400 text-white rounded hover:bg-blue-500 transition duration-300">Sign Up</a>
+                  {% endif %}
+                </div>
       </div>
   </div>
 </nav>

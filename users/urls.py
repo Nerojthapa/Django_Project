@@ -34,6 +34,8 @@ urlpatterns = [
     path('myorder/', views.myorder, name='myorder'),
     path('corder/', views.corder, name='corder'),
     path('esewaform', views.EsewaView.as_view(), name='esewaform'),
-    path('esewaverify/<int:order_id>/<int:cart_id>', views.esewa_verify, name='esewaverify')
+    path('esewaverify/<int:order_id>/<int:cart_id>', views.esewa_verify, name='esewaverify'),
+    path('userprofile/', views.userprofile, name='userprofile'),
+    path('updateprofile/', views.updateprofile, name='updateprofile')
 
 ]
